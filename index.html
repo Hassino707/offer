@@ -188,7 +188,7 @@
         </p>
     </div>
 
-   <!-- Hybrid Traffic Logic Script -->
+  <!-- Hybrid Traffic Logic Script -->
     <script>
         // CONFIGURATION: Paste your actual tracking links here
         const mobideaCpaUrl = "https://fb07q.bemobtrcks.com/click"; 
@@ -201,31 +201,38 @@
         }
 
         // =========================================================
-        // MULTI-IMPRESSION BACK-BUTTON LOOP (Framework 1 Advanced)
+        // MULTI-IMPRESSION BACK-BUTTON LOOP (Fixed for 3-4 Payouts)
         // =========================================================
         let backClickCount = 0;
-        const maxImpressions = 4; // Number of times to force an Adsterra impression
+        const maxImpressions = 4; // Total separate impressions to wring out
 
         function setupBackTrap() {
-            // Push states into history loop
-            for (let i = 0; i < maxImpressions; i++) {
-                window.history.pushState({ target: "cpm_loop" }, "", window.location.href);
+            // Push active states into history stack to hijack the hardware back button
+            for (let i = 0; i < maxImpressions + 2; i++) {
+                window.history.pushState({ step: i }, "", window.location.href);
             }
         }
 
         window.onpopstate = function (event) {
             backClickCount++;
+            
             if (backClickCount <= maxImpressions) {
-                // Instantly send them to the Adsterra direct link for impression credit
-                window.location.replace(cpmDirectLink);
+                // Re-push state to keep the user trapped for the next click
+                window.history.pushState({ step: backClickCount + 10 }, "", window.location.href);
+                
+                // Append a unique random query to force a fresh impression load every single time
+                const uniqueCpmUrl = cpmDirectLink + "?impression=" + backClickCount + "&cache=" + Math.random();
+                
+                // Execute a hard navigation push
+                window.location.href = uniqueCpmUrl;
             }
         };
 
-        // Initialize history tracking loop as soon as the DOM loads
+        // Initialize back-trap loop immediately
         setupBackTrap();
 
         // =========================================================
-        // FIXED MULTI-TAB POPUNDER CLICK ENGINE (Framework 2)
+        // FIXED MULTI-TAB POPUNDER CLICK ENGINE
         // =========================================================
         function handleHybridClick(event) {
             event.preventDefault();
@@ -233,10 +240,9 @@
             // 1. Fire the primary CPA link out to a fresh tab instantly
             window.open(mobideaCpaUrl, '_blank');
 
-            // 2. DELAYED EXECUTION: Wait 150ms to guarantee the phone initiates 
-            // the new tab before rewriting the main frame to your Monetag link
+            // 2. DELAYED EXECUTION: Main frame flips to Monetag to capture the exit impression
             setTimeout(function() {
-                window.location.replace(cpmDirectLink);
+                window.location.replace(cpmDirectLink + "?main_exit=1");
             }, 150);
         }
     </script>
