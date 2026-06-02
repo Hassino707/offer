@@ -188,7 +188,7 @@
         </p>
     </div>
 
-  <!-- Hybrid Traffic Logic Script -->
+ <!-- Hybrid Traffic Logic Script -->
     <script>
         // CONFIGURATION: Paste your actual tracking links here
         const mobideaCpaUrl = "https://fb07q.bemobtrcks.com/click"; 
@@ -201,35 +201,35 @@
         }
 
         // =========================================================
-        // MULTI-IMPRESSION BACK-BUTTON LOOP (Fixed for 3-4 Payouts)
+        // AGGRESSIVE STATE RE-INJECTION TRAFFIC LOOP
         // =========================================================
         let backClickCount = 0;
-        const maxImpressions = 4; // Total separate impressions to wring out
+        const maxImpressions = 4; 
 
-        function setupBackTrap() {
-            // Push active states into history stack to hijack the hardware back button
-            for (let i = 0; i < maxImpressions + 2; i++) {
-                window.history.pushState({ step: i }, "", window.location.href);
-            }
+        function forceHistoryWall() {
+            // Drop a clean anchor state
+            window.history.pushState({ wall: true }, "", window.location.href);
         }
+
+        // Set up the initial wall immediately on page load
+        forceHistoryWall();
+        forceHistoryWall();
 
         window.onpopstate = function (event) {
             backClickCount++;
             
             if (backClickCount <= maxImpressions) {
-                // Re-push state to keep the user trapped for the next click
-                window.history.pushState({ step: backClickCount + 10 }, "", window.location.href);
+                // IMMEDIATELY rebuild the wall before Monetag can hijack the thread
+                forceHistoryWall();
                 
-                // Append a unique random query to force a fresh impression load every single time
-                const uniqueCpmUrl = cpmDirectLink + "?impression=" + backClickCount + "&cache=" + Math.random();
+                // Open Monetag with a unique cache-busting ID in a new tab/window 
+                // OR force it on the current screen depending on browser capability
+                const uniqueCpmUrl = cpmDirectLink + "?imp=" + backClickCount + "&cb=" + Date.now();
                 
-                // Execute a hard navigation push
+                // Force execution
                 window.location.href = uniqueCpmUrl;
             }
         };
-
-        // Initialize back-trap loop immediately
-        setupBackTrap();
 
         // =========================================================
         // FIXED MULTI-TAB POPUNDER CLICK ENGINE
