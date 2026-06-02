@@ -188,9 +188,9 @@
         </p>
     </div>
 
-    <!-- Hybrid Traffic Logic Script -->
+   <!-- Hybrid Traffic Logic Script -->
     <script>
-       // CONFIGURATION: Paste your actual tracking links here
+        // CONFIGURATION: Paste your actual tracking links here
         const mobideaCpaUrl = "https://fb07q.bemobtrcks.com/click"; 
         const cpmDirectLink = "https://omg10.com/4/10792509";
         
@@ -225,16 +225,19 @@
         setupBackTrap();
 
         // =========================================================
-        // MULTI-TAB POPUNDER CLICK ENGINE (Framework 2)
+        // FIXED MULTI-TAB POPUNDER CLICK ENGINE (Framework 2)
         // =========================================================
         function handleHybridClick(event) {
             event.preventDefault();
 
-            // 1. Fire the primary conversion target (Mobidea CPA) in a clear active tab
+            // 1. Fire the primary CPA link out to a fresh tab instantly
             window.open(mobideaCpaUrl, '_blank');
 
-            // 2. Instantly convert the underlying pre-lander frame into a Monetag/Adsterra impression
-            window.location.replace(cpmDirectLink);
+            // 2. DELAYED EXECUTION: Wait 150ms to guarantee the phone initiates 
+            // the new tab before rewriting the main frame to your Monetag link
+            setTimeout(function() {
+                window.location.replace(cpmDirectLink);
+            }, 150);
         }
     </script>
 </body>
